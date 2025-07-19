@@ -40,4 +40,25 @@
 1. **Clone the repository**
 ```bash
 git clone https://github.com/your-username/mindpaper-ai.git
-cd mindpaper-ai
+cd mindpaper-ai```
+
+2. **Create a virtual environment**
+```bash
+conda create -n mindpaper python=3.11
+conda activate mindpaper
+
+3. **Create a virtual environment**
+```bash
+pip install -r requirements.txt
+
+4. **Create a virtual environment**
+```bash
+ollama pull deepseek-llm:1.5b   # or any model you configured
+ollama pull nomic-embed-text    # for embeddings
+
+5. **Create a virtual environment**
+```bash
+streamlit run app.py
+
+
+

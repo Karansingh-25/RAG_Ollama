@@ -1,12 +1,13 @@
 # 🧠 MindPaper AI
 
-**MindPaper AI** is an intelligent, offline-capable document assistant built using **Streamlit**, **LangChain**, and **Ollama**. It allows users to upload PDF documents, understand their content through smart chunking and embeddings, and interactively ask questions — all powered by local LLMs.
+**MindPaper AI** is an intelligent, offline-capable document assistant built using **Streamlit**, **LangChain**, and **Gemini**. It allows users to upload PDF documents, understand their content through smart chunking and embeddings, and interactively ask questions — all powered by local LLMs.
 
 ---
 
 ## 📸 Preview
 
-<img width="1900" height="1088" alt="Screenshot 2025-07-19 144542" src="https://github.com/user-attachments/assets/c6cdbdf0-b824-4157-91b3-5958ed8d78b9" />
+<img width="1912" height="1091" alt="image" src="https://github.com/user-attachments/assets/7c3e7a2f-d8b4-43d7-a6b7-bbf69713073e" />
+
 
 
 
@@ -18,7 +19,6 @@
 - 📄 **Understands and processes PDF documents**
 - 🔍 **Finds relevant content** using smart semantic search
 - 🤖 **Answers questions** with context-aware AI reasoning
-- ⚡ **Runs fully offline** using local LLMs via Ollama
 - 🧠 Uses custom prompt templates for accurate and concise answers
 - 🖥️ Clean, dark-themed UI with live chat and file uploader
 
@@ -29,8 +29,8 @@
 - 🐍 Python
 - ⚙️ Streamlit (UI)
 - 🔗 LangChain (RAG, document processing)
-- 🤖 Ollama (Local LLM backend)
-- 🧠 DeepSeek / LLaMA3 / Nomic Embeddings (model-agnostic design)
+- 🤖 Uses Gemini Models
+- 📐 Sentence Transformer
 - 📄 PDFPlumber (for document reading)
 
 ---

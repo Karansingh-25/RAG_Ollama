@@ -6,7 +6,9 @@
 
 ## 📸 Preview
 
-![MindPaper AI UI](./6add4105-fe6f-425f-9207-d8b08cbc663a.png)
+<img width="1900" height="1088" alt="Screenshot 2025-07-19 144542" src="https://github.com/user-attachments/assets/c6cdbdf0-b824-4157-91b3-5958ed8d78b9" />
+
+
 
 ---
 

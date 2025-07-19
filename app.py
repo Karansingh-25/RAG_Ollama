@@ -2,9 +2,17 @@ import streamlit as st
 from langchain_community.document_loaders import PDFPlumberLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.vectorstores import InMemoryVectorStore
-from langchain_ollama.embeddings import OllamaEmbeddings
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_ollama.llms import OllamaLLM
+from google import genai
+import google.generativeai as genai
+from sentence_transformers import SentenceTransformer
+
+
+from dotenv import load_dotenv
+load_dotenv()
+
+import os
+api_key=os.getenv("GEMINI_API_KEY")
+genai.configure(api_key=api_key)
 
 
 st.markdown("""
@@ -70,7 +78,7 @@ with st.sidebar:
     st.header("⚙️ Configuration")
     selected_model = st.selectbox(
         "Choose Model",
-        ["deepseek-r1:1.5b", "llama3.2:latest"],
+        ["gemini-2.5-flash", "gemini-2.5-pro"],
         index=0
     )
     st.divider()
@@ -79,10 +87,10 @@ with st.sidebar:
 - 📄 Understands and processes PDF documents
 - 🔍 Finds relevant content using smart semantic search
 - 🤖 Answers questions with context-aware AI
-- ⚡ Runs fully offline using local LLMs via Ollama
+- ⚡ Uses Gemini Models for fast and accurate responses
 """)
     st.divider()
-    st.markdown("Built with [Ollama](https://ollama.ai/) | [LangChain](https://python.langchain.com/)")
+    st.markdown("Built with [Gemini](https://ai.google.dev/gemini-api/docs/models) | [LangChain](https://python.langchain.com/)")
 
 
 PROMPT_TEMPLATE = """
@@ -95,10 +103,17 @@ Answer:
 """
 
 PDF_STORAGE_PATH="document Store/pdfs/"
-EMBEDDING_MODEL=OllamaEmbeddings(model=selected_model)
+EMBEDDING_MODEL = SentenceTransformer("all-MiniLM-L6-v2") 
 
-DOCUMENT_VECTOR_DB=InMemoryVectorStore(EMBEDDING_MODEL)
-LANGUAGE_MODEL=OllamaLLM(model=selected_model)
+class SBERTEmbeddings:
+    def embed_documents(self, texts):
+        return EMBEDDING_MODEL.encode(texts).tolist() 
+    
+    def embed_query(self, text):
+        return EMBEDDING_MODEL.encode([text])[0].tolist()
+
+DOCUMENT_VECTOR_DB = InMemoryVectorStore(SBERTEmbeddings())
+
 
 def save_uploaded_file(uploaded_file):
     file_path=PDF_STORAGE_PATH+uploaded_file.name
@@ -124,11 +139,14 @@ def index_documents(document_chunks):
 def find_related_documents(query):
     return DOCUMENT_VECTOR_DB.similarity_search(query)
 
-def generate_answer(user_query, context_documents):
+def generate_answer(user_query, context_documents, selected_model=selected_model):
     context_text = "\n\n".join([doc.page_content for doc in context_documents])
-    conversation_prompt = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
-    response_chain = conversation_prompt | LANGUAGE_MODEL
-    return response_chain.invoke({"user_query": user_query, "document_context": context_text})
+    prompt = PROMPT_TEMPLATE.format(user_query=user_query, document_context=context_text)
+    model = genai.GenerativeModel(selected_model)
+    response = model.generate_content(prompt)
+    return response.text if hasattr(response, "text") else str(response)
+
+
 
 
 # UI Configuration

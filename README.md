@@ -35,32 +35,5 @@
 
 ---
 
-## 🛠️ Installation
-
-
-```bash
-1. **Clone the repository**
-git clone https://github.com/your-username/mindpaper-ai.git
-cd mindpaper-ai
-
-2. **Create a virtual environment**
-
-conda create -n mindpaper python=3.11
-conda activate mindpaper
-
-3. ** Install dependencies**
-
-pip install -r requirements.txt
-
-4. **Install and pull Ollama models
-**
-
-ollama pull deepseek-llm:1.5b   
-ollama pull llama3.2:latest    
-
-5. **Run the application**
-
-streamlit run app.py
-
 
 
